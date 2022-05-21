@@ -31,7 +31,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="character1Click"
-            tools:srcCompat="@tools:sample/avatars" />
+            tools:srcCompat="@drawable/character1" />
+
 
         <ImageButton
             android:id="@+id/character2Button"
@@ -39,7 +40,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="character2Click"
-            app:srcCompat="@android:drawable/arrow_down_float" />
+            app:srcCompat="@drawable/character2" />
     </LinearLayout>
 
     <LinearLayout
@@ -54,7 +55,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="character3Click"
-            app:srcCompat="@android:drawable/arrow_up_float" />
+            app:srcCompat="@drawable/character3" />
 
         <ImageButton
             android:id="@+id/character4Button"
@@ -62,6 +63,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="character4Click"
-            app:srcCompat="@android:drawable/btn_dialog" />
+            app:srcCompat="@drawable/character4" />
     </LinearLayout>
 </LinearLayout>
