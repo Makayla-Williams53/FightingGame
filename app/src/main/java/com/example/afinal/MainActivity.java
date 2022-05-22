@@ -66,3 +66,5 @@ public class MainActivity extends AppCompatActivity {
     }//end charConfirm method
 
 }//end Main activity method
+
+//code for how to pass in extra variables to next activity from https://www.youtube.com/watch?v=eL69kj-_Wvs

@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/arrow_up_float" />
+            app:srcCompat="@drawable/villain" />
     </LinearLayout>
 
 
@@ -61,7 +61,7 @@
         android:layout_weight="1.2"
         android:backgroundTint="#550277"
         android:onClick="attackClick"
-        android:text="Button" />
+        android:text="Attack" />
 
     <Button
         android:id="@+id/specialButton"
@@ -69,6 +69,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1.2"
         android:backgroundTint="#550277"
+        android:onClick="specialClick"
         android:text="Special Attack" />
 
     <Button
