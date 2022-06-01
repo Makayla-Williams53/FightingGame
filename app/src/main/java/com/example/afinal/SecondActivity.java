@@ -60,7 +60,7 @@ public class SecondActivity extends AppCompatActivity
     public void attackClick(View v)
     {
         TextView current = (TextView) findViewById(R.id.currentMoveView);
-        current.setText("Attack");
+        current.setText("You attack");
 
         //creates object that will allow for the delayed code
         Handler handler = new Handler();
@@ -73,7 +73,7 @@ public class SecondActivity extends AppCompatActivity
             public void run()
             {
                 int rand = (int) (Math.random() * 100);
-                if(rand <= 40 && opponentBlocking == false)
+                if(rand <= 60 && opponentBlocking == false)
                 {
                     opponentHealth -= 15;
                     TextView opponentView = (TextView)findViewById(R.id.opponentHealthView);
@@ -119,7 +119,7 @@ public class SecondActivity extends AppCompatActivity
             public void run()
             {
                 int rand = (int)(Math.random() * 100);
-                if(rand <= 30 && opponentBlocking == false)
+                if(rand <= 50 && opponentBlocking == false)
                 {
                     opponentHealth -= 25;
                     TextView opponentView = (TextView)findViewById(R.id.opponentHealthView);
@@ -157,6 +157,8 @@ public class SecondActivity extends AppCompatActivity
     public void blockClick(View v)
     {
         userBlocking = true;
+        TextView current = (TextView) findViewById(R.id.currentMoveView);
+        current.setText("You are blocking, preparing for your opponent's next move");
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable()
@@ -172,93 +174,104 @@ public class SecondActivity extends AppCompatActivity
 
     public void opponentMove()
     {
-        int rand = (int) ((Math.random() * 10) + 1);
-        while(rand != 1 && rand != 2 && rand != 3)
-        {
-            rand = (int) ((Math.random() * 10) + 1);
-        }
-
-        if(rand == 1)
-        {
-            //opponent attacking
-            TextView current = (TextView) findViewById(R.id.currentMoveView);
-            current.setText("Opponent Attacks");
-
-            //creates object that will allow for the delayed code
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    int rand = (int) (Math.random() * 100);
-                    if(rand <= 40 && userBlocking == false)
-                    {
-                        userHealth -= 15;
-                        TextView userView = (TextView) findViewById(R.id.userHealthView);
-                        userView.setText("User Health: " + userHealth);
-                        current.setText("The opponents attack did 15 points of damage");
-                    }//end if
-                    else if(userBlocking){
-                        current.setText("You were blocking so you were not damaged by their attack.");
-                    }//end else if
-                    else
-                    {
-                        current.setText("You dodged the attack");
-                    }//end else
-                }//end run method
-            }, 4000); //end postDelay method
-        }//end if
-        else if(rand == 2)
-        {
-            //opponent special attack
-            TextView current = (TextView) findViewById(R.id.currentMoveView);
-            current.setText("Opponent Special Attack");
-
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    int rand = (int)(Math.random() * 100);
-                    if(rand <= 30 && userBlocking == false)
-                    {
-                        userHealth -= 25;
-                        TextView userView = (TextView)findViewById(R.id.userHealthView);
-                        userView.setText("User Health: " + userHealth);
-                        current.setText("Their special attack did 25 points of damage");
-                    }//end if
-                    else if(userBlocking == true)
-                    {
-                        opponentHealth -= 15;
-                        TextView userView = (TextView)findViewById(R.id.userHealthView);
-                        userView.setText("User Health: " + userHealth);
-                        current.setText("You were blocking so their special attack did less damage");
-                    }//end else if
-                    else
-                    {
-                        current.setText("You dodged the special attack");
-                    }//end else
-
-                    userBlocking = false;
-
-                }//end run method
-            }, 4000);//end post delay method
-        }//end outer else if
-        else
-        {
-            TextView current = (TextView) findViewById(R.id.currentMoveView);
-
-            opponentBlocking = true;
-            current.setText("Your opponent is blocking");
-        }//end else
-
         TextView current = (TextView) findViewById(R.id.currentMoveView);
+        current.setText("Opponent's move");
 
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        handler.postDelayed(new Runnable()
+        {
             @Override
-            public void run() {
-                current.setText("User move");
-            }//end run method
-        }, 4000); //end postDelay method
+            public void run()
+            {
+
+//                int rand = (int) ((Math.random() * 10) + 1);
+//                while(rand != 1 && rand != 2 && rand != 3)
+//                {
+//                    rand = (int) ((Math.random() * 10) + 1);
+//                }
+                int rand = 1;
+
+                if(rand == 1)
+                {
+                    //opponent attacking
+                    current.setText("Opponent Attacks");
+
+                    //creates object that will allow for the delayed code
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable()
+                    {
+                        @Override
+                        public void run() {
+                            int rand = (int) (Math.random() * 100);
+                            if(rand <= 60 && userBlocking == false)
+                            {
+                                userHealth -= 15;
+                                TextView userView = (TextView) findViewById(R.id.userHealthView);
+                                userView.setText("User Health: " + userHealth);
+                                current.setText("The opponents attack did 15 points of damage");
+                            }//end if
+                            else if(userBlocking){
+                                current.setText("You were blocking so you were not damaged by their attack.");
+                            }//end else if
+                            else
+                            {
+                                current.setText("You dodged the attack");
+                            }//end else
+                        }//end run method
+                    }, 4000); //end postDelay method
+                }//end if
+                else if(rand == 2)
+                {
+                    //opponent special attack
+                    current.setText("Opponent Special Attack");
+
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            int rand = (int)(Math.random() * 100);
+                            if(rand <= 50 && userBlocking == false)
+                            {
+                                userHealth -= 25;
+                                TextView userView = (TextView)findViewById(R.id.userHealthView);
+                                userView.setText("User Health: " + userHealth);
+                                current.setText("Their special attack did 25 points of damage");
+                            }//end if
+                            else if(userBlocking == true)
+                            {
+                                opponentHealth -= 15;
+                                TextView userView = (TextView)findViewById(R.id.userHealthView);
+                                userView.setText("User Health: " + userHealth);
+                                current.setText("You were blocking so their special attack did less damage");
+                            }//end else if
+                            else
+                            {
+                                current.setText("You dodged the special attack");
+                            }//end else
+
+                            userBlocking = false;
+
+                        }//end run method
+                    }, 4000);//end post delay method
+                }//end outer else if
+                else
+                {
+                    opponentBlocking = true;
+                    current.setText("Your opponent is blocking");
+                }//end else
+            }//end runnable
+        }, 3000); //end postDelayed method
+
+        handler.postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                current.setText("Your Move");
+            }//end runable method
+        }, 10000); //end postDelayed method
 
     }//end opponentMove
 
