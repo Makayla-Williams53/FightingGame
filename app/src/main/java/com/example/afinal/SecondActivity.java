@@ -17,23 +17,25 @@ import java.lang.Thread;
 
 public class SecondActivity extends AppCompatActivity
 {
+    public static final String EXTRA_NUM = "com.example.example.EXTRA_NUMBER";
+
+    int characterNum;
+
     int userHealth = 100;
     boolean userBlocking = false;
-    int opponentHealth = 100;
+    int opponentHealth = 15;
     boolean opponentBlocking = false;
     boolean userTurn = true;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        Intent intent = getIntent();
+        characterNum = intent.getIntExtra(MainActivity.EXTRA_NUM, 0);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-        ImageView img = (ImageView) findViewById(R.id.userCharacterView);
-
-
-        Intent intent = getIntent();
-        int characterNum = intent.getIntExtra(MainActivity.EXTRA_NUM, 0);
+        ImageView img = findViewById(R.id.userCharacterView);
 
         if(characterNum == 1)
         {
@@ -60,10 +62,12 @@ public class SecondActivity extends AppCompatActivity
 
     public void attackClick(View v)
     {
+        test();
+
         if(userTurn)
         {
             userTurn = false;
-            TextView current = (TextView) findViewById(R.id.currentMoveView);
+            TextView current = findViewById(R.id.currentMoveView);
             current.setText("You attack");
 
             //creates object that will allow for the delayed code
@@ -79,7 +83,7 @@ public class SecondActivity extends AppCompatActivity
                     if(rand <= 60 && opponentBlocking == false)
                     {
                         opponentHealth -= 15;
-                        TextView opponentView = (TextView)findViewById(R.id.opponentHealthView);
+                        TextView opponentView = findViewById(R.id.opponentHealthView);
                         opponentView.setText("Opponent Health: " + opponentHealth);
                         current.setText("Your attack did 15 points of damage");
                     }//end if
@@ -111,10 +115,12 @@ public class SecondActivity extends AppCompatActivity
 
     public void specialClick(View v)
     {
+        test();
+
         if(userTurn)
         {
             userTurn = false;
-            TextView current = (TextView) findViewById(R.id.currentMoveView);
+            TextView current = findViewById(R.id.currentMoveView);
             current.setText("Special Attack");
 
             Handler handler = new Handler();
@@ -127,7 +133,7 @@ public class SecondActivity extends AppCompatActivity
                     if(rand <= 50 && opponentBlocking == false)
                     {
                         opponentHealth -= 25;
-                        TextView opponentView = (TextView)findViewById(R.id.opponentHealthView);
+                        TextView opponentView = findViewById(R.id.opponentHealthView);
                         opponentView.setText("Opponent Health: " + opponentHealth);
                         current.setText("Your special attack did 25 points of damage");
                     }//end if
@@ -161,6 +167,8 @@ public class SecondActivity extends AppCompatActivity
 
     public void blockClick(View v)
     {
+        test();
+
         if(userTurn)
         {
             userTurn = false;
@@ -182,6 +190,8 @@ public class SecondActivity extends AppCompatActivity
 
     public void opponentMove()
     {
+        test();
+
         TextView current = (TextView) findViewById(R.id.currentMoveView);
         current.setText("Opponent's move");
 
@@ -282,6 +292,23 @@ public class SecondActivity extends AppCompatActivity
             }//end run method
         }, 10000); //end postDelayed method
     }//end opponentMove
+
+    public void test()
+    {
+        if(userHealth <= 0)
+        {
+            Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
+            intent.putExtra(EXTRA_NUM, -1);
+            startActivity(intent);
+        }//end if
+        else if(opponentHealth <= 0)
+        {
+            Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
+            intent.putExtra(EXTRA_NUM, characterNum);
+            startActivity(intent);
+        }//end else if
+    }//end test method
+
 
 }//end secondActivity class
 
