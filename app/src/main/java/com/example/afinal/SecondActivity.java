@@ -9,27 +9,24 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
-
-import java.lang.Thread;
 
 public class SecondActivity extends AppCompatActivity
 {
-    public static final String EXTRA_NUM = "com.example.example.EXTRA_NUMBER";
+    //used to pass parameter to next screen
+    public static final String EXTRA_NUMV2 = "com.example.example.EXTRA_NUMBER";
 
+    //character variables
     int characterNum;
-
     int userHealth = 100;
     boolean userBlocking = false;
-    int opponentHealth = 15;
+    int opponentHealth = 100;
     boolean opponentBlocking = false;
     boolean userTurn = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        //gets parameter from previous screen
         Intent intent = getIntent();
         characterNum = intent.getIntExtra(MainActivity.EXTRA_NUM, 0);
 
@@ -37,6 +34,7 @@ public class SecondActivity extends AppCompatActivity
         setContentView(R.layout.activity_second);
         ImageView img = findViewById(R.id.userCharacterView);
 
+        //sets user character image
         if(characterNum == 1)
         {
             Drawable myDrawable = getResources().getDrawable(R.drawable.character1);
@@ -57,11 +55,12 @@ public class SecondActivity extends AppCompatActivity
             Drawable myDrawable = getResources().getDrawable(R.drawable.character4);
             img.setImageDrawable(myDrawable);
         }//end third else if
-
     }//end onCreate
 
+    //user attack method
     public void attackClick(View v)
     {
+        //test if a character or opponent has zero health
         test();
 
         if(userTurn)
@@ -79,9 +78,11 @@ public class SecondActivity extends AppCompatActivity
                 @Override
                 public void run()
                 {
+                    //creates random num to see if attack worked
                     int rand = (int) (Math.random() * 100);
                     if(rand <= 60 && opponentBlocking == false)
                     {
+                        //changes opponent health and text view
                         opponentHealth -= 15;
                         TextView opponentView = findViewById(R.id.opponentHealthView);
                         opponentView.setText("Opponent Health: " + opponentHealth);
@@ -110,11 +111,14 @@ public class SecondActivity extends AppCompatActivity
                 }//end outer run method
                 //insert the amount of time delayed
             }, 4000);//end outer postDelayed method
+
         }//end userTurn if
     }//end attackClick method
 
+    //user special attack method
     public void specialClick(View v)
     {
+        //tests to see if character or opponent has zero health
         test();
 
         if(userTurn)
@@ -129,9 +133,11 @@ public class SecondActivity extends AppCompatActivity
                 @Override
                 public void run()
                 {
+                    //creates random num to see if attack worked
                     int rand = (int)(Math.random() * 100);
                     if(rand <= 50 && opponentBlocking == false)
                     {
+                        //changes opponent health and text screen
                         opponentHealth -= 25;
                         TextView opponentView = findViewById(R.id.opponentHealthView);
                         opponentView.setText("Opponent Health: " + opponentHealth);
@@ -140,7 +146,7 @@ public class SecondActivity extends AppCompatActivity
                     else if(opponentBlocking == true)
                     {
                         opponentHealth -= 10;
-                        TextView opponentView = (TextView)findViewById(R.id.opponentHealthView);
+                        TextView opponentView = findViewById(R.id.opponentHealthView);
                         opponentView.setText("Opponent Health: " + opponentHealth);
                         current.setText("Your opponent was blocking so your special attack did 10 points of damage");
                     }//end else if
@@ -162,18 +168,21 @@ public class SecondActivity extends AppCompatActivity
 
                 }//end outer run
             }, 4000);//end outer postDelayed
+
         }//end userTurn if
     }//end specialClick
 
+    //user block method
     public void blockClick(View v)
     {
+        //tests if character or opponent has zero health
         test();
 
         if(userTurn)
         {
             userTurn = false;
             userBlocking = true;
-            TextView current = (TextView) findViewById(R.id.currentMoveView);
+            TextView current = findViewById(R.id.currentMoveView);
             current.setText("You are blocking, preparing for your opponent's next move");
 
             Handler handler = new Handler();
@@ -185,14 +194,17 @@ public class SecondActivity extends AppCompatActivity
                     opponentMove();
                 }//end run
             }, 4000); //end postDelayed
+
         }//end userTurn if
     }//end blockClick
 
+    //opponent move method
     public void opponentMove()
     {
+        //tests to see if character or opponent has zero health
         test();
 
-        TextView current = (TextView) findViewById(R.id.currentMoveView);
+        TextView current = findViewById(R.id.currentMoveView);
         current.setText("Opponent's move");
 
         Handler handler = new Handler();
@@ -201,7 +213,7 @@ public class SecondActivity extends AppCompatActivity
             @Override
             public void run()
             {
-
+                //creates random number to select opponent move
                 int rand = (int) ((Math.random() * 10) + 1);
                 while(rand != 1 && rand != 2 && rand != 3)
                 {
@@ -220,11 +232,13 @@ public class SecondActivity extends AppCompatActivity
                         @Override
                         public void run()
                         {
+                            //creates random num to see if attack worked
                             int rand = (int) (Math.random() * 100);
                             if(rand <= 60 && userBlocking == false)
                             {
+                                //changes user health and text view
                                 userHealth -= 15;
-                                TextView userView = (TextView) findViewById(R.id.userHealthView);
+                                TextView userView = findViewById(R.id.userHealthView);
                                 userView.setText("User Health: " + userHealth);
                                 current.setText("The opponents attack did 15 points of damage");
                             }//end if
@@ -236,6 +250,7 @@ public class SecondActivity extends AppCompatActivity
                                 current.setText("You dodged the attack");
                             }//end else
                         }//end run method
+
                     }, 4000); //end postDelay method
                 }//end if
                 else if(rand == 2)
@@ -249,18 +264,20 @@ public class SecondActivity extends AppCompatActivity
                         @Override
                         public void run()
                         {
+                            //creates random num to see if attack worked
                             int rand = (int)(Math.random() * 100);
                             if(rand <= 50 && userBlocking == false)
                             {
+                                //changes user health and text view
                                 userHealth -= 25;
-                                TextView userView = (TextView)findViewById(R.id.userHealthView);
+                                TextView userView = findViewById(R.id.userHealthView);
                                 userView.setText("User Health: " + userHealth);
                                 current.setText("Their special attack did 25 points of damage");
                             }//end if
                             else if(userBlocking == true)
                             {
                                 opponentHealth -= 15;
-                                TextView userView = (TextView)findViewById(R.id.userHealthView);
+                                TextView userView = findViewById(R.id.userHealthView);
                                 userView.setText("User Health: " + userHealth);
                                 current.setText("You were blocking so their special attack did less damage");
                             }//end else if
@@ -273,6 +290,7 @@ public class SecondActivity extends AppCompatActivity
 
                         }//end run method
                     }, 4000);//end post delay method
+
                 }//end outer else if
                 else
                 {
@@ -297,18 +315,19 @@ public class SecondActivity extends AppCompatActivity
     {
         if(userHealth <= 0)
         {
-            Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
-            intent.putExtra(EXTRA_NUM, -1);
-            startActivity(intent);
+            //goes to third screen passing in that the villain won
+            Intent intent2 = new Intent(SecondActivity.this, ThirdActivity.class);
+            intent2.putExtra(EXTRA_NUMV2, -1);
+            startActivity(intent2);
         }//end if
         else if(opponentHealth <= 0)
         {
-            Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
-            intent.putExtra(EXTRA_NUM, characterNum);
-            startActivity(intent);
+            //goes to third screen passing in that the her won and the character num
+            Intent intent2 = new Intent(SecondActivity.this, ThirdActivity.class);
+            intent2.putExtra(EXTRA_NUMV2, characterNum);
+            startActivity(intent2);
         }//end else if
     }//end test method
-
 
 }//end secondActivity class
 

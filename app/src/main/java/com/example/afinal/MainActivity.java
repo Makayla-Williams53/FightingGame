@@ -7,11 +7,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    //used to pass parameters to next screen
     public static final String EXTRA_NUM = "com.example.example.EXTRA_NUMBER";
 
     @Override
@@ -20,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }//end on create
 
+    //character selections
     public void character1Click(View v)
     {
         charConfirm(1, EXTRA_NUM);
@@ -40,8 +40,10 @@ public class MainActivity extends AppCompatActivity {
         charConfirm(4, EXTRA_NUM);
     }//end character4Click
 
+    //pop up for confirmation
     public void charConfirm(int num, String EXTRA_NUM)
     {
+        //create dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Confirm that you want to use character " + num);
         builder.setPositiveButton("Absolutely", new DialogInterface.OnClickListener() {
