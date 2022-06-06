@@ -1,4 +1,4 @@
-# Repo Name: FightingGame
+# Repo Name: 8 Bit Fighting Game
 
 ## Final for AP Computer Science A
 
