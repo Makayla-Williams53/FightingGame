@@ -298,6 +298,7 @@ public class SecondActivity extends AppCompatActivity
                             }//end if
                             else if(userBlocking == true)
                             {
+                                //changes user health and text view
                                 userHealth -= 15;
                                 TextView userView = findViewById(R.id.userHealthView);
                                 userView.setText("User Health: " + userHealth);
