@@ -10,10 +10,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class SecondActivity extends AppCompatActivity
 {
     //used to pass parameter to next screen
     public static final String EXTRA_NUMV2 = "com.example.example.EXTRA_NUMBER";
+    public static final String EXTRA_ARRAY = "com.example.example.EXTRA_ARRAY";
 
     //character variables
     int characterNum;
@@ -22,6 +25,9 @@ public class SecondActivity extends AppCompatActivity
     int opponentHealth = 100;
     boolean opponentBlocking = false;
     boolean userTurn = true;
+
+    //Arraylist to hold each move
+    ArrayList<Integer> moves = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -55,6 +61,7 @@ public class SecondActivity extends AppCompatActivity
             Drawable myDrawable = getResources().getDrawable(R.drawable.character4);
             img.setImageDrawable(myDrawable);
         }//end third else if
+
     }//end onCreate
 
     //user attack method
@@ -87,18 +94,20 @@ public class SecondActivity extends AppCompatActivity
                         TextView opponentView = findViewById(R.id.opponentHealthView);
                         opponentView.setText("Opponent Health: " + opponentHealth);
                         current.setText("Your attack did 15 points of damage");
+                        moves.add(11);
                     }//end if
                     else if(opponentBlocking == true)
                     {
                         current.setText("Your opponent was blocking was not damaged by your attack");
+                        moves.add(12);
                     }//end else if
                     else
                     {
                         current.setText("Your opponent dodged the attack");
+                        moves.add(13);
                     }//end else
 
                     opponentBlocking = false;
-
                     handler.postDelayed(new Runnable()
                     {
                         @Override
@@ -142,6 +151,7 @@ public class SecondActivity extends AppCompatActivity
                         TextView opponentView = findViewById(R.id.opponentHealthView);
                         opponentView.setText("Opponent Health: " + opponentHealth);
                         current.setText("Your special attack did 25 points of damage");
+                        moves.add(21);
                     }//end if
                     else if(opponentBlocking == true)
                     {
@@ -149,10 +159,12 @@ public class SecondActivity extends AppCompatActivity
                         TextView opponentView = findViewById(R.id.opponentHealthView);
                         opponentView.setText("Opponent Health: " + opponentHealth);
                         current.setText("Your opponent was blocking so your special attack did 10 points of damage");
+                        moves.add(22);
                     }//end else if
                     else
                     {
                         current.setText("Your opponent dodged the attack");
+                        moves.add(23);
                     }//end else
 
                     opponentBlocking = false;
@@ -182,8 +194,10 @@ public class SecondActivity extends AppCompatActivity
         {
             userTurn = false;
             userBlocking = true;
+            opponentBlocking = false;
             TextView current = findViewById(R.id.currentMoveView);
             current.setText("You are blocking, preparing for your opponent's next move");
+            moves.add(31);
 
             Handler handler = new Handler();
             handler.postDelayed(new Runnable()
@@ -241,14 +255,19 @@ public class SecondActivity extends AppCompatActivity
                                 TextView userView = findViewById(R.id.userHealthView);
                                 userView.setText("User Health: " + userHealth);
                                 current.setText("The opponents attack did 15 points of damage");
+                                moves.add(41);
                             }//end if
                             else if(userBlocking){
                                 current.setText("You were blocking so you were not damaged by their attack.");
+                                moves.add(42);
                             }//end else if
                             else
                             {
                                 current.setText("You dodged the attack");
+                                moves.add(43);
                             }//end else
+
+                            userBlocking = false;
                         }//end run method
 
                     }, 4000); //end postDelay method
@@ -266,13 +285,14 @@ public class SecondActivity extends AppCompatActivity
                         {
                             //creates random num to see if attack worked
                             int rand = (int)(Math.random() * 100);
-                            if(rand <= 50 && userBlocking == false)
+                            if(rand <= 40 && userBlocking == false)
                             {
                                 //changes user health and text view
                                 userHealth -= 25;
                                 TextView userView = findViewById(R.id.userHealthView);
                                 userView.setText("User Health: " + userHealth);
                                 current.setText("Their special attack did 25 points of damage");
+                                moves.add(51);
                             }//end if
                             else if(userBlocking == true)
                             {
@@ -280,10 +300,12 @@ public class SecondActivity extends AppCompatActivity
                                 TextView userView = findViewById(R.id.userHealthView);
                                 userView.setText("User Health: " + userHealth);
                                 current.setText("You were blocking so their special attack did less damage");
+                                moves.add(52);
                             }//end else if
                             else
                             {
                                 current.setText("You dodged the special attack");
+                                moves.add(53);
                             }//end else
 
                             userBlocking = false;
@@ -295,7 +317,9 @@ public class SecondActivity extends AppCompatActivity
                 else
                 {
                     opponentBlocking = true;
+                    userBlocking = false;
                     current.setText("Your opponent is blocking, preparing for your attack");
+                    moves.add(61);
                 }//end else
             }//end runnable
         }, 3000); //end postDelayed method
@@ -318,6 +342,7 @@ public class SecondActivity extends AppCompatActivity
             //goes to third screen passing in that the villain won
             Intent intent2 = new Intent(SecondActivity.this, ThirdActivity.class);
             intent2.putExtra(EXTRA_NUMV2, -1);
+            intent2.putExtra(EXTRA_ARRAY, moves);
             startActivity(intent2);
         }//end if
         else if(opponentHealth <= 0)
@@ -325,6 +350,7 @@ public class SecondActivity extends AppCompatActivity
             //goes to third screen passing in that the her won and the character num
             Intent intent2 = new Intent(SecondActivity.this, ThirdActivity.class);
             intent2.putExtra(EXTRA_NUMV2, characterNum);
+            intent2.putExtra("key", moves);
             startActivity(intent2);
         }//end else if
     }//end test method

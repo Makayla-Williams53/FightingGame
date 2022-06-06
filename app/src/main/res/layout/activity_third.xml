@@ -11,7 +11,7 @@
         android:id="@+id/winnerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.5"
+        android:layout_weight="4"
         android:background="#550277"
         app:srcCompat="@drawable/character1" />
 
@@ -19,23 +19,49 @@
         android:id="@+id/winnerText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="5"
         android:background="#169385"
         android:fontFamily="sans-serif-black"
         android:gravity="center"
-        android:textSize="35sp"
+        android:text="The winner is: "
         android:textColor="#000000"
-        android:text="The winner is: " />
+        android:textSize="35sp" />
+
+    <TextView
+        android:id="@+id/gameTitleView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:background="#50C7C7"
+        android:fontFamily="sans-serif-black"
+        android:gravity="left|center_vertical"
+        android:text="Game Overview:"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/gameView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        android:background="#50C7C7"
+        android:fontFamily="sans-serif-black"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textSize="15sp" />
 
     <Button
         android:id="@+id/replayButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="4"
         android:backgroundTint="#550277"
-        android:textSize="40sp"
         android:onClick="replay"
-        android:text="replay?" />
+        android:text="replay?"
+        android:textSize="40sp" />
 
 
 </LinearLayout>
