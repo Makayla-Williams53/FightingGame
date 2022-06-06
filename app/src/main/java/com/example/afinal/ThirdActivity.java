@@ -9,7 +9,6 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -69,7 +68,10 @@ public class ThirdActivity extends AppCompatActivity
             winText.setText("The winner is: YOU!!!");
         }//end fourth else if
 
-        //creates game overviews through the array passed thorugh
+        //creates game overviews through the array passed through
+        //based on which numbers were inserted the number in the ten's place
+        //determines who did what move and the number in the one's place
+        //determines if it worked and how so
         String output = "";
         for(int i = 0; i < moves.size(); i++)
         {

@@ -16,7 +16,6 @@ public class SecondActivity extends AppCompatActivity
 {
     //used to pass parameter to next screen
     public static final String EXTRA_NUMV2 = "com.example.example.EXTRA_NUMBER";
-    public static final String EXTRA_ARRAY = "com.example.example.EXTRA_ARRAY";
 
     //character variables
     int characterNum;
@@ -94,16 +93,19 @@ public class SecondActivity extends AppCompatActivity
                         TextView opponentView = findViewById(R.id.opponentHealthView);
                         opponentView.setText("Opponent Health: " + opponentHealth);
                         current.setText("Your attack did 15 points of damage");
+                        //adds in the move that just happened to the arraylist
                         moves.add(11);
                     }//end if
                     else if(opponentBlocking == true)
                     {
                         current.setText("Your opponent was blocking was not damaged by your attack");
+                        //adds in the move that just happened to the arraylist
                         moves.add(12);
                     }//end else if
                     else
                     {
                         current.setText("Your opponent dodged the attack");
+                        //adds in the move that just happened to the arraylist
                         moves.add(13);
                     }//end else
 
@@ -342,7 +344,7 @@ public class SecondActivity extends AppCompatActivity
             //goes to third screen passing in that the villain won
             Intent intent2 = new Intent(SecondActivity.this, ThirdActivity.class);
             intent2.putExtra(EXTRA_NUMV2, -1);
-            intent2.putExtra(EXTRA_ARRAY, moves);
+            intent2.putExtra("key", moves);
             startActivity(intent2);
         }//end if
         else if(opponentHealth <= 0)
