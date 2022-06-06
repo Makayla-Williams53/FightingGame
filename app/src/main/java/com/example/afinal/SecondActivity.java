@@ -298,7 +298,7 @@ public class SecondActivity extends AppCompatActivity
                             }//end if
                             else if(userBlocking == true)
                             {
-                                opponentHealth -= 15;
+                                userHealth -= 15;
                                 TextView userView = findViewById(R.id.userHealthView);
                                 userView.setText("User Health: " + userHealth);
                                 current.setText("You were blocking so their special attack did less damage");
